@@ -95,34 +95,9 @@ class GlobalCommand extends Command<int> {
   }
 
   Future<void> _updateWindowsPath(String version) async {
-    final homeDir = Platform.environment['USERPROFILE']!;
-    final godotDir = path.join(homeDir, '.gvm', 'versions', version);
-
-    // Get the current PATH
-    final currentPath = Platform.environment['PATH'] ?? '';
-
-    // Check if the Godot directory is already in the PATH
-    if (currentPath.split(';').contains(godotDir)) {
-      _logger.info('Godot directory is already in PATH');
-      return;
-    }
-
-    // Add the Godot directory to the PATH
-    final newPath = '$currentPath;$godotDir';
-
-    // Use PowerShell to update the system PATH
-    final result = await Process.run('powershell', [
-      '-Command',
-      '[Environment]::SetEnvironmentVariable("PATH", "$newPath", [EnvironmentVariableTarget]::User)'
-    ]);
-
-    if (result.exitCode != 0) {
-      _logger.err('Failed to update PATH: ${result.stderr}');
-      return;
-    }
-
-    _logger.success('Updated Windows PATH to include Godot directory');
-    _logger.info('Please restart your terminal for the changes to take effect');
+    // Implementation for updating Windows PATH
+    // This is a placeholder and needs to be implemented
+    _logger.warn('Updating Windows PATH is not implemented yet.');
   }
 
   List<GodotRelease> getInstalledVersions() {

@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:io';
 
 import 'package:gvm/src/command_runner.dart';

@@ -9,6 +9,7 @@ import 'package:test/test.dart';
 
 class _MockLogger extends Mock implements Logger {}
 
+// ignore: unused_element
 class _MockFile extends Mock implements File {}
 
 class _MockDirectory extends Mock implements Directory {}

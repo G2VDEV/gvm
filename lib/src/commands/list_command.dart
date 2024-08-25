@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -120,7 +122,9 @@ class ListCommand extends Command<int> {
         progress.complete('Fetched available versions');
         return releases
             .map(
-              (release) => GodotRelease.fromJson(release as Map<String, dynamic>),
+              (release) => GodotRelease.fromJson(
+                release as Map<String, dynamic>,
+              ),
             )
             .where(
               (version) =>

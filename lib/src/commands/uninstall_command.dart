@@ -44,7 +44,6 @@ class UninstallCommand extends Command<int> {
 
     final confirmed = _logger.confirm(
       'Are you sure you want to uninstall Godot ${releaseToUninstall.name}?',
-      defaultValue: false,
     );
 
     if (!confirmed) {
@@ -53,7 +52,7 @@ class UninstallCommand extends Command<int> {
     }
 
     final uninstallDir = _getInstallDir(releaseToUninstall.name);
-    if (await uninstallDir.exists()) {
+    if (uninstallDir.existsSync()) {
       await uninstallDir.delete(recursive: true);
       _logger
           .success('Godot ${releaseToUninstall.name} uninstalled successfully');

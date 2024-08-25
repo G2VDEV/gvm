@@ -110,25 +110,32 @@ class ListCommand extends Command<int> {
   }
 
   Future<List<GodotRelease>> fetchRemoteVersions() async {
-    const url = 'https://api.github.com/repos/godotengine/godot/releases';
-    final response = await http.get(Uri.parse(url));
+    final progress = _logger.progress('Fetching available Godot versions');
+    try {
+      const url = 'https://api.github.com/repos/godotengine/godot/releases';
+      final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      final releases = jsonDecode(response.body) as List;
-      return releases
-          .map(
-            (release) => GodotRelease.fromJson(release as Map<String, dynamic>),
-          )
-          .where(
-            (version) =>
-                version.id.startsWith('3.') || version.id.startsWith('4.'),
-          )
-          .toList();
-    } else {
-      _logger.err(
-        'Failed to fetch remote versions. Status code: ${response.statusCode}',
-      );
-      return [];
+      if (response.statusCode == 200) {
+        final releases = jsonDecode(response.body) as List;
+        progress.complete('Fetched available versions');
+        return releases
+            .map(
+              (release) => GodotRelease.fromJson(release as Map<String, dynamic>),
+            )
+            .where(
+              (version) =>
+                  version.id.startsWith('3.') || version.id.startsWith('4.'),
+            )
+            .toList();
+      } else {
+        progress.fail('Failed to fetch versions');
+        throw Exception(
+          'Failed to fetch remote versions. Status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      progress.fail('Error fetching versions');
+      rethrow;
     }
   }
 }

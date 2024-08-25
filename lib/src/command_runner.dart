@@ -47,6 +47,7 @@ class GvmCommandRunner extends CompletionCommandRunner<int> {
     addCommand(GlobalCommand(logger: _logger));
     addCommand(CurrentCommand(logger: _logger));
     addCommand(UseCommand(logger: _logger));
+    addCommand(GodotCommand(logger: _logger)); // Added this line
   }
 
   @override
